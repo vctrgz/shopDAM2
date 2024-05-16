@@ -23,9 +23,9 @@ import java.util.Scanner;
 public class Shop {
 	private Amount cash;
 	//private Product[] inventory;
-	private ArrayList<Product> inventory;
+	public ArrayList<Product> inventory;
 	//private Sale[] sales;
-	private ArrayList<Sale> sales;
+	public ArrayList<Sale> sales;
 	//int salePosicion;
 
 	final static double TAX_RATE = 1.04;
@@ -184,6 +184,11 @@ public class Shop {
 	private void showCash() {
 		
 		System.out.println("Dinero actual: " + this.cash.toString());
+	}
+	
+public String showCashSwing() {
+		
+		return this.cash.toString();
 	}
 
 	/**
