@@ -81,6 +81,10 @@ public class LoginView extends JFrame implements ActionListener, KeyListener{
 		lblNewLabel_2.setBounds(66, 132, 141, 71);
 		contentPane.add(lblNewLabel_2);
 		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(66, 194, 177, 33);
+		contentPane.add(textField_2);
 		
 		btnNewButton = new JButton("Aceptar");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -88,10 +92,6 @@ public class LoginView extends JFrame implements ActionListener, KeyListener{
 		btnNewButton.addActionListener(this);
 		contentPane.add(btnNewButton);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(66, 194, 177, 33);
-		contentPane.add(textField_2);
 		
 		/*textField.addKeyListener(this);
         textField_2.addKeyListener(this);
@@ -108,6 +108,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener{
 	@Override
 	
 	public void actionPerformed(ActionEvent e) {
+		
 		int controlador = 0;
 		if (textField.getText().isEmpty() && textField_2.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Indique un usuario y una contraseña", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -115,11 +116,10 @@ public class LoginView extends JFrame implements ActionListener, KeyListener{
 		else {
 			
 			try {
-				System.out.println("");
 				// Intenta convertir el texto a un número
 				int usuario = Integer.parseInt(textField.getText());
-				empleado.login(Integer.parseInt(textField.getText()), textField_2.getText());
-				if (empleado.login(Integer.parseInt(textField.getText()), textField_2.getText()) == true) {
+				empleado.login(usuario, textField_2.getText());
+				if (empleado.login(usuario, textField_2.getText()) == true) {
 					ShopView shopview = new ShopView();
 					shopview.setVisible(true);
 					controlador = 1;
@@ -138,7 +138,7 @@ public class LoginView extends JFrame implements ActionListener, KeyListener{
 			} 
 			catch (NumberFormatException ex) {
 				// Si ocurre una excepción, el texto no es un número
-				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectoss", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos", "ERROR", JOptionPane.ERROR_MESSAGE);
 				textField.setText("");
 				textField_2.setText("");
 				contador ++;
