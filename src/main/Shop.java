@@ -20,23 +20,28 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import dao.Dao;
+import dao.DaoImpIJDBC;
+import dao.DaoImplFile;
+
 public class Shop {
 	private Amount cash;
-	//private Product[] inventory;
+	// private Product[] inventory;
 	public ArrayList<Product> inventory;
-	//private Sale[] sales;
+	// private Sale[] sales;
 	public ArrayList<Sale> sales;
-	//int salePosicion;
+	// int salePosicion;
+	Dao dao = new DaoImplFile();
 
 	final static double TAX_RATE = 1.04;
 
 	public Shop() {
-		cash = new Amount(10.0); 
-		//inventory = new Product[10];
+		cash = new Amount(10.0);
+		// inventory = new Product[10];
 		inventory = new ArrayList<Product>();
-		//sales = new Sale[10];
+		// sales = new Sale[10];
 		sales = new ArrayList<Sale>();
-		//salePosicion = 0;
+		// salePosicion = 0;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -49,12 +54,13 @@ public class Shop {
 		boolean exit = false;
 
 		initSession();
-		
+
 		do {
 			System.out.println("\n");
 			System.out.println("===========================");
 			System.out.println("Menu principal miTienda.com");
 			System.out.println("===========================");
+			System.out.println("0) Exportar inventario");
 			System.out.println("1) Contar caja");
 			System.out.println("2) Añadir producto");
 			System.out.println("3) Añadir stock");
@@ -69,6 +75,10 @@ public class Shop {
 			opcion = scanner.nextInt();
 
 			switch (opcion) {
+			case 0:
+				shop.showCash();
+				break;
+
 			case 1:
 				shop.showCash();
 				break;
@@ -96,31 +106,29 @@ public class Shop {
 			case 7:
 				shop.showSales();
 				break;
-				
+
 			case 8:
 				shop.totalVentas();
 				break;
-				
+
 			case 9:
 				shop.removeProduct();
 				break;
-				
+
 			case 10:
 				exit = true;
 				break;
-				
-			case 11:
-				shop.loadInventory();
-				break;
-			}	
-			
+
+			}
+
 		} while (!exit);
 
 	}
 
 	/**
 	 * load initial inventory to shop
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	private static void initSession() {
 		Employee empleado = new Employee();
@@ -135,59 +143,31 @@ public class Shop {
 			empleado.login(numeroEmpleado, contrasenyaEmpleado);
 			if (empleado.login(numeroEmpleado, contrasenyaEmpleado) == false) {
 				System.out.println("Usuario o Contraseña incorrectos");
-			}
-			else {
+			} else {
 				System.out.println("Login correcto");
 			}
 		} while (empleado.login(numeroEmpleado, contrasenyaEmpleado) == false);
 	}
-	public void loadInventory() throws IOException {
-		/*
-		addProduct(new Product("Manzana", 10.00, true, 10));
-		addProduct(new Product("Pera", 20.00, true, 20));
-		addProduct(new Product("Hamburguesa", 30.00, true, 30));
-		addProduct(new Product("Fresa", 5.00, true, 20));
-		*/
-		File f = new File(System.getProperty("user.dir") + File.separator + "files/inputInventory.txt");
-		FileReader fr = new FileReader(f);
-		BufferedReader br = new BufferedReader(fr);
-		String linea = br.readLine();
-		while (linea != null) {
-			String [] resultado = linea.split(";");
-			String [] resultadoFinal;
-			String nombre = null;
-			double precio = 0;
-			int stock = 0;
-			for (int i = 0; i < resultado.length; i++) {
-				resultadoFinal = resultado[i].split(":");
-				switch (i) {
-				case 0:
-					nombre = resultadoFinal[1];
-					break;
-				case 1:
-					precio = Double.parseDouble(resultadoFinal[1]);
-					break;
-				case 2:
-					stock = Integer.parseInt(resultadoFinal[1]);
-					break;
-				}
-			}
-			addProduct(new Product(nombre, precio, true, stock));
-			
-			linea = br.readLine();
-		}
-	}
 
+	public void loadInventory() throws IOException {
+		this.inventory = dao.getInventory();
+		System.out.println(inventory);
+	}
+	public boolean writeInventory() throws IOException {
+		boolean operacionCompletada;
+		operacionCompletada = dao.writeInventory(inventory);
+		return operacionCompletada;
+	}
 	/**
 	 * show current total cash
 	 */
 	private void showCash() {
-		
+
 		System.out.println("Dinero actual: " + this.cash.toString());
 	}
-	
-public String showCashSwing() {
-		
+
+	public String showCashSwing() {
+
 		return this.cash.toString();
 	}
 
@@ -205,7 +185,6 @@ public String showCashSwing() {
 
 		addProduct(new Product(name, wholesalerPrice, true, stock));
 	}
-	
 	/**
 	 * add stock for a specific product
 	 */
@@ -227,6 +206,7 @@ public String showCashSwing() {
 			System.out.println("No se ha encontrado el producto con nombre " + name);
 		}
 	}
+
 	public void removeProduct() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Seleccione un nombre de producto: ");
@@ -242,7 +222,7 @@ public String showCashSwing() {
 		}
 
 	}
-	
+
 	/**
 	 * set a product as expired
 	 */
@@ -297,54 +277,56 @@ public String showCashSwing() {
 			}
 			Product product = findProduct(name);
 			boolean productAvailable = false;
-			
+
 			if (product != null && product.isAvailable()) {
 				productAvailable = true;
-				//Añadir opción de elegir cantidad de producto
+				// Añadir opción de elegir cantidad de producto
 				System.out.println("Introduce la cantidad de producto que desea comprar");
 				int cantidadProducto = sc.nextInt();
 				if (cantidadProducto > 0 && cantidadProducto <= product.getStock()) {
 					product.setStock(product.getStock() - cantidadProducto);
-					//totalAmount += (product.getPublicPrice() * cantidadProducto);
-					totalAmount.setValor(totalAmount.getValor() + (product.getPublicPrice().getValor() * cantidadProducto));
+					// totalAmount += (product.getPublicPrice() * cantidadProducto);
+					totalAmount.setValor(
+							totalAmount.getValor() + (product.getPublicPrice().getValor() * cantidadProducto));
 					productos.add(product);
 					// if no more stock, set as not available to sale
 					if (product.getStock() == 0) {
 						product.setAvailable(false);
 					}
 					System.out.println("Producto añadido con éxito");
-				}else {
+				} else {
 					System.out.println("Stock insuficiente");
 					productAvailable = false;
 				}
-				 
+
 			}
-			
+
 			if (!productAvailable) {
 				System.out.println("Producto no encontrado o sin stock");
 			}
 		}
 
 		// show cost total
-		
-		//totalAmount = totalAmount * TAX_RATE;
+
+		// totalAmount = totalAmount * TAX_RATE;
 		totalAmount.setValor(totalAmount.getValor() * TAX_RATE);
 		fechaHora = LocalDateTime.now();
 		Sale sale = new Sale(client, productos, totalAmount, fechaHora);
-		//sales [salePosicion] = sale;
+		// sales [salePosicion] = sale;
 		sales.add(sale);
-		//cash += totalAmount;
+		// cash += totalAmount;
 		cash.setValor(cash.getValor() + totalAmount.getValor());
 		System.out.println("Venta realizada con éxito, total: " + totalAmount);
 		client.pay(totalAmount);
-		
+
 	}
 
 	/**
 	 * show all sales
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
-	
+
 	private void showSales() throws IOException {
 		System.out.println("Lista de ventas:");
 		for (Sale sale : sales) {
@@ -359,10 +341,11 @@ public String showCashSwing() {
 			almacenarVentas();
 		}
 	}
+
 	public void almacenarVentas() throws IOException {
 		LocalDate fecha = LocalDate.now();
-		String rutaCarpeta = System.getProperty("user.dir")+File.separator+"files";
-		String rutaArchivo = rutaCarpeta + File.separator + "sales_"+fecha.toString()+".txt";
+		String rutaCarpeta = System.getProperty("user.dir") + File.separator + "files";
+		String rutaArchivo = rutaCarpeta + File.separator + "sales_" + fecha.toString() + ".txt";
 		LocalDateTime fechaHora = LocalDateTime.now();
 		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/mm/yyyy hh:mm:ss");
 		System.out.println(rutaArchivo);
@@ -377,10 +360,10 @@ public String showCashSwing() {
 				for (int i = 0; i < sale.getProducts().size(); i++) {
 					String nombreProducto = sale.getProducts().get(i).getName();
 					Amount precioProducto = sale.getProducts().get(i).getPublicPrice();
-					
+
 					pw.write(nombreProducto + ", " + precioProducto + ";");
 				}
-				pw.write("\n");				
+				pw.write("\n");
 				pw.write(iteracion + ";Amount=" + sale.getAmount() + "\n");
 				iteracion++;
 			}
@@ -388,51 +371,46 @@ public String showCashSwing() {
 		pw.close();
 	}
 
-
 	/**
 	 * add a product to inventory
 	 * 
 	 * @param product
 	 */
 	public void addProduct(Product product) {
-		//inventory[numberProducts] = product;
+		// inventory[numberProducts] = product;
 		inventory.add(product);
 	}
 
 	/**
 	 * check if inventory is full or not
-	 
-	public boolean isInventoryFull() {
-		if (inventory.size() >= 10) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-	*/
+	 * 
+	 * public boolean isInventoryFull() { if (inventory.size() >= 10) { return true;
+	 * } else { return false; }
+	 * 
+	 * }
+	 */
 	private void totalVentas() {
 		Amount totalVentas = new Amount(0.0);
 		boolean ventasVacio = true;
 		for (int i = 0; i < sales.size(); i++) {
 			if (sales.get(i) != null) {
-				//totalVentas += sales[i].getAmount();
+				// totalVentas += sales[i].getAmount();
 				totalVentas.setValor(totalVentas.getValor() + (sales.get(i).getAmount()).getValor());
 				ventasVacio = false;
 			}
-		}if (ventasVacio == true) {
+		}
+		if (ventasVacio == true) {
 			System.out.println("No se han encontrado ventas");
-		}else {
+		} else {
 			System.out.println("Valor total de ventas: " + totalVentas);
 		}
 	}
-	
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
 	}
-	
 
 	/**
 	 * find product by name

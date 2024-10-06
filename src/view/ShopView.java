@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 import main.Shop;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 import javax.swing.AbstractAction;
@@ -26,6 +28,7 @@ import javax.swing.SwingConstants;
 public class ShopView extends JFrame implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
+	public static final int AC_ExportarInventario = 0;
 	public static final int AC_ContarCaja = 1;
 	public static final int AC_AnyadirProducto = 2;
 	public static final int AC_AnyadirStock = 3;
@@ -35,8 +38,9 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	public static final int AC_VerVentas = 7;
 	public static final int AC_VerVentaTotal = 8;
 	public static final int AC_EliminarProducto = 9;
-	public static final int AC_SalirPrograma = 0;
+	public static final int AC_SalirPrograma = 10;
 	private JPanel contentPane;
+	private JButton btnExportarInventario;
 	private JButton btnContarCaja;
 	private JButton btnAnyadirProducto;
 	private JButton btnAnyadirStock;
@@ -74,11 +78,19 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		lblNewLabel.setBounds(10, 24, 300, 57);
 		contentPane.add(lblNewLabel);
 		
+		btnExportarInventario = new JButton("0) Exportar inventario");
+		btnExportarInventario.setActionCommand(String.valueOf(AC_ExportarInventario));
+		btnExportarInventario.setHorizontalAlignment(SwingConstants.LEFT);
+		btnExportarInventario.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnExportarInventario.setBounds(56, 93, 347, 47);
+		btnExportarInventario.addActionListener(this);
+		contentPane.add(btnExportarInventario);		
+		
 		btnContarCaja = new JButton("1) Contar caja");
 		btnContarCaja.setActionCommand(String.valueOf(AC_ContarCaja));
 		btnContarCaja.setHorizontalAlignment(SwingConstants.LEFT);
 		btnContarCaja.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnContarCaja.setBounds(58, 91, 347, 47);
+		btnContarCaja.setBounds(56, 150, 347, 47);
 		btnContarCaja.addActionListener(this);
 		contentPane.add(btnContarCaja);
 		
@@ -86,7 +98,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnAnyadirProducto.setActionCommand(String.valueOf(AC_AnyadirProducto));
 		btnAnyadirProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAnyadirProducto.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnAnyadirProducto.setBounds(58, 148, 347, 47);
+		btnAnyadirProducto.setBounds(56, 207, 347, 47);
 		btnAnyadirProducto.addActionListener(this);
 		contentPane.add(btnAnyadirProducto);
 		
@@ -94,7 +106,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnAnyadirStock.setActionCommand(String.valueOf(AC_AnyadirStock));
 		btnAnyadirStock.setHorizontalAlignment(SwingConstants.LEFT);
 		btnAnyadirStock.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnAnyadirStock.setBounds(58, 205, 347, 47);
+		btnAnyadirStock.setBounds(56, 264, 347, 47);
 		btnAnyadirStock.addActionListener(this);
 		contentPane.add(btnAnyadirStock);
 		
@@ -102,7 +114,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnMarcarProducto.setActionCommand(String.valueOf(AC_MarcarProducto));
 		btnMarcarProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnMarcarProducto.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnMarcarProducto.setBounds(58, 262, 347, 47);
+		btnMarcarProducto.setBounds(56, 321, 347, 47);
 		btnMarcarProducto.addActionListener(this);
 		contentPane.add(btnMarcarProducto);
 		
@@ -110,7 +122,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnVerInventario.setActionCommand(String.valueOf(AC_VerInventario));
 		btnVerInventario.setHorizontalAlignment(SwingConstants.LEFT);
 		btnVerInventario.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnVerInventario.setBounds(58, 319, 347, 47);
+		btnVerInventario.setBounds(56, 378, 347, 47);
 		btnVerInventario.addActionListener(this);
 		contentPane.add(btnVerInventario);
 		
@@ -118,7 +130,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnVenta.setActionCommand(String.valueOf(AC_Venta));
 		btnVenta.setHorizontalAlignment(SwingConstants.LEFT);
 		btnVenta.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnVenta.setBounds(58, 376, 347, 47);
+		btnVenta.setBounds(56, 435, 347, 47);
 		btnVenta.addActionListener(this);
 		contentPane.add(btnVenta);
 		
@@ -126,7 +138,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnVerVentas.setActionCommand(String.valueOf(AC_VerVentas));
 		btnVerVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		btnVerVentas.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnVerVentas.setBounds(58, 433, 347, 47);
+		btnVerVentas.setBounds(56, 492, 347, 47);
 		btnVerVentas.addActionListener(this);
 		contentPane.add(btnVerVentas);
 		
@@ -134,7 +146,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnVerVentaTotal.setActionCommand(String.valueOf(AC_VerVentaTotal));
 		btnVerVentaTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		btnVerVentaTotal.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnVerVentaTotal.setBounds(58, 490, 347, 47);
+		btnVerVentaTotal.setBounds(56, 549, 347, 47);
 		btnVerVentaTotal.addActionListener(this);
 		contentPane.add(btnVerVentaTotal);
 		
@@ -142,15 +154,15 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		btnEliminarProducto.setActionCommand(String.valueOf(AC_EliminarProducto));
 		btnEliminarProducto.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEliminarProducto.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnEliminarProducto.setBounds(58, 547, 347, 47);
+		btnEliminarProducto.setBounds(56, 606, 347, 47);
 		btnEliminarProducto.addActionListener(this);
 		contentPane.add(btnEliminarProducto);
 		
-		btnSalirPrograma = new JButton("0) Salir programa");
+		btnSalirPrograma = new JButton("10) Salir programa");
 		btnSalirPrograma.setActionCommand(String.valueOf(AC_SalirPrograma));
 		btnSalirPrograma.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSalirPrograma.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnSalirPrograma.setBounds(58, 604, 347, 47);
+		btnSalirPrograma.setBounds(56, 663, 347, 47);
 		btnSalirPrograma.addActionListener(this);
 		contentPane.add(btnSalirPrograma);
 		
@@ -162,6 +174,22 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		switch (Integer.valueOf(e.getActionCommand())) {
+		case AC_ExportarInventario:
+			boolean resultado = false;
+			try {
+				resultado = tienda.writeInventory();
+				if (resultado == true) {
+					JOptionPane.showMessageDialog(null, "Exportación completada", "", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Error al exportar inventario", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al exportar inventario", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+			this.requestFocusInWindow();
+			break;
 		case AC_ContarCaja:
 			CashView cashView = new CashView(tienda);
 			cashView.setVisible(true);
@@ -223,6 +251,9 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		int key = e.getKeyCode();
 		switch (key) {
+		case KeyEvent.VK_0:
+            btnContarCaja.doClick();
+            break;
 		case KeyEvent.VK_1:
             btnContarCaja.doClick();
             break;
@@ -250,7 +281,7 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
         case KeyEvent.VK_9:
             btnEliminarProducto.doClick();
             break;
-        case KeyEvent.VK_0:
+        case KeyEvent.VK_END:
             btnSalirPrograma.doClick();
             break;
 		default:
