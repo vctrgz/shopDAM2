@@ -1,0 +1,11 @@
+1;Product=Manzana;Stock=10
+2;Product=Fresa;Stock=20
+3;Product=Pera;Stock=30
+4;Product=Datil;Stock=100
+5;Product=Melon;Stock=15
+6;Product=Uva;Stock=25
+7;Product=Ciruela;Stock=50
+8;Product=Melocoton;Stock=70
+9;Product=Tomate;Stock=150
+10;Product=Naranja;Stock=80
+Numero total de productos: 10

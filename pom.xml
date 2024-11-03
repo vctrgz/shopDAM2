@@ -11,7 +11,12 @@
 		<version>8.0.25</version>
 		<scope>runtime</scope>
 	</dependency>
-</dependencies>
+	<dependency>
+		<groupId>SpringBoot</groupId>
+		<artifactId>Hospital</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

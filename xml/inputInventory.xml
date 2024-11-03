@@ -1,0 +1,10 @@
+<products>
+	<product name="Manzana">
+		<wholesalerPrice currency="Euro">5</wholesalerPrice>
+		<stock>20</stock>
+	</product>
+	<product name="Fresa">
+		<wholesalerPrice currency="Euro">10</wholesalerPrice>
+		<stock>10</stock>
+	</product>
+</products>
