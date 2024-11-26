@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<products total="2">
+    <product id="0" name="Manzana">
+        <available>false</available>
+        <wholesalerPrice>5.0</wholesalerPrice>
+        <stock>20</stock>
+    </product>
+    <product id="0" name="Fresa">
+        <available>false</available>
+        <wholesalerPrice>10.0</wholesalerPrice>
+        <stock>10</stock>
+    </product>
+</products>

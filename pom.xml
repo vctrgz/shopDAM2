@@ -12,9 +12,19 @@
 		<scope>runtime</scope>
 	</dependency>
 	<dependency>
-		<groupId>SpringBoot</groupId>
-		<artifactId>Hospital</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+    <groupId>com.google.code.javaparser</groupId>
+    <artifactId>javaparser</artifactId>
+    <version>1.0.11</version>
+	</dependency>
+  	<dependency>
+	  <groupId>javax.xml.bind</groupId>
+	  <artifactId>jaxb-api</artifactId>
+	  <version>2.3.1</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.glassfish.jaxb</groupId>
+	  <artifactId>jaxb-runtime</artifactId>
+	  <version>2.3.3</version>
 	</dependency>
   </dependencies>
   <build>

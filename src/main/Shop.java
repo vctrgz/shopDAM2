@@ -22,6 +22,7 @@ import java.util.Scanner;
 
 import dao.Dao;
 import dao.DaoImpIJDBC;
+import dao.DaoImplJaxb;
 import dao.DaoImplXML;
 
 public class Shop {
@@ -31,7 +32,7 @@ public class Shop {
 	// private Sale[] sales;
 	public ArrayList<Sale> sales;
 	// int salePosicion;
-	Dao dao = new DaoImplXML();
+	Dao dao = new DaoImplJaxb();
 
 	final static double TAX_RATE = 1.04;
 

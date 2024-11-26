@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import exception.LimitLoginException;
 import model.Employee;
+import view.ShopView;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
