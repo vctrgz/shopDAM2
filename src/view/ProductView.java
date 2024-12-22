@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -121,11 +122,26 @@ public class ProductView extends JDialog implements ActionListener{
 		switch (Integer.valueOf(e.getActionCommand())) {
 		case AC_OK:
 			if (opcion == ShopView.AC_AnyadirProducto){
-				anyadirProducto();
+				try {
+					anyadirProducto();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}else if (opcion == ShopView.AC_AnyadirStock) {
-				anyadirStock();
+				try {
+					anyadirStock();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}else if (opcion == ShopView.AC_EliminarProducto) {
-				eliminarProducto();
+				try {
+					eliminarProducto();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			break;
 		case AC_CANCEL:
@@ -136,7 +152,7 @@ public class ProductView extends JDialog implements ActionListener{
 		}
 	}
 
-	private void anyadirProducto() {
+	private void anyadirProducto() throws SQLException {
 		nombre = textField.getText();
 		String stockStr = textField_1.getText();
 		String precioStr = textField_2.getText();
@@ -149,7 +165,12 @@ public class ProductView extends JDialog implements ActionListener{
 				if (tienda.findProduct(nombre) != null) {
 					JOptionPane.showMessageDialog(null, "ESTE PRODUCTO YA EXISTE EN EL INVENTARIO", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else {
-					tienda.addProduct(new Product(nombre, precio, true, stock));
+					try {
+						tienda.addProduct(new Product(nombre, precio, true, stock));
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(null, "PRODUCTO AÑADIDO CORRECTAMENTE", "", JOptionPane.INFORMATION_MESSAGE);
 					this.setVisible(false);				
 				}				
@@ -158,7 +179,7 @@ public class ProductView extends JDialog implements ActionListener{
 			}
 		}
 	}
-	private void anyadirStock() {
+	private void anyadirStock() throws SQLException {
 		nombre = textField.getText();
 		String stockStr = textField_1.getText();
 		Product producto = tienda.findProduct(nombre);
@@ -171,6 +192,7 @@ public class ProductView extends JDialog implements ActionListener{
 					JOptionPane.showMessageDialog(null, "ESTE PRODUCTO NO EXISTE EN EL INVENTARIO", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}else {
 					producto.setStock(producto.getStock() + stock);
+					tienda.addStock(nombre, stock);
 					JOptionPane.showMessageDialog(null, "STOCK AÑADIDO CORRECTAMENTE", "", JOptionPane.INFORMATION_MESSAGE);
 					this.setVisible(false);				
 				}				
@@ -179,7 +201,7 @@ public class ProductView extends JDialog implements ActionListener{
 			}
 		}
 	}
-	private void eliminarProducto() {
+	private void eliminarProducto() throws SQLException {
 		nombre = textField.getText();
 		Product producto = tienda.findProduct(nombre);
 		if (nombre.isEmpty()) {
@@ -189,6 +211,7 @@ public class ProductView extends JDialog implements ActionListener{
 				JOptionPane.showMessageDialog(null, "ESTE PRODUCTO NO EXISTE EN EL INVENTARIO", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}else {
 				tienda.inventory.remove(producto);
+				tienda.deleteProduct(nombre);
 				JOptionPane.showMessageDialog(null, "PRODUCTO ELIMINADO CORRECTAMENTE", "", JOptionPane.INFORMATION_MESSAGE);
 				this.setVisible(false);				
 			}				

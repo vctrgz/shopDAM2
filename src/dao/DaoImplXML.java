@@ -68,4 +68,22 @@ public class DaoImplXML implements Dao {
 		return domWriter.generateDocument(inventory);
 	}
 
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addStock(String name, int stock) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProduct(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

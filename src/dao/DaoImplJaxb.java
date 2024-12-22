@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import dao.jaxb.JaxbMarshaller;
 import dao.jaxb.JaxbUnMarshaller;
+import model.Amount;
 import model.Employee;
 import model.Product;
 
@@ -41,6 +42,24 @@ public class DaoImplJaxb implements Dao{
 	public boolean writeInventory(ArrayList<Product> inventory) {
 		// TODO Auto-generated method stub
 		return marshaller.init(inventory);
+	}
+
+	@Override
+	public void addStock(String name, int stock) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProduct(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

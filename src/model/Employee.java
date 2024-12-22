@@ -3,14 +3,14 @@ package model;
 import java.sql.SQLException;
 
 import dao.Dao;
-import dao.DaoImpIJDBC;
+import dao.DaoImplJDBC;
 import main.Logable;
 
 public class Employee extends Person implements Logable{
 	int employeeId;
 	int userNumber;
 	String password;
-	Dao dao = new DaoImpIJDBC();
+	Dao dao = new DaoImplJDBC();
 	
 	public Employee(int employeeID, int userNumber, String password) {
 		this.employeeId = employeeID;

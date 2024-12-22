@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +22,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import dao.Dao;
-import dao.DaoImpIJDBC;
+import dao.DaoImplJDBC;
 import dao.DaoImplJaxb;
 import dao.DaoImplXML;
 
@@ -32,7 +33,7 @@ public class Shop {
 	// private Sale[] sales;
 	public ArrayList<Sale> sales;
 	// int salePosicion;
-	Dao dao = new DaoImplJaxb();
+	Dao dao = new DaoImplJDBC();
 
 	final static double TAX_RATE = 1.04;
 
@@ -45,7 +46,7 @@ public class Shop {
 		// salePosicion = 0;
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, SQLException {
 		Shop shop = new Shop();
 
 		shop.loadInventory();
@@ -150,13 +151,17 @@ public class Shop {
 		} while (empleado.login(numeroEmpleado, contrasenyaEmpleado) == false);
 	}
 
-	public void loadInventory() throws IOException {
+	public void loadInventory() throws IOException, SQLException {
+		dao.connect();
 		this.inventory = dao.getInventory();
 		System.out.println(inventory);
+		dao.disconnect();
 	}
-	public boolean writeInventory() throws IOException {
+	public boolean writeInventory() throws IOException, SQLException {
+		dao.connect();
 		boolean operacionCompletada;
 		operacionCompletada = dao.writeInventory(inventory);
+		dao.disconnect();
 		return operacionCompletada;
 	}
 	/**
@@ -174,8 +179,9 @@ public class Shop {
 
 	/**
 	 * add a new product to inventory getting data from console
+	 * @throws SQLException 
 	 */
-	public void addProduct() {
+	public void addProduct() throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Nombre: ");
 		String name = scanner.nextLine();
@@ -376,11 +382,29 @@ public class Shop {
 	 * add a product to inventory
 	 * 
 	 * @param product
+	 * @throws SQLException 
 	 */
-	public void addProduct(Product product) {
+	public void addProduct(Product product) throws SQLException {
 		// inventory[numberProducts] = product;
 		inventory.add(product);
+		dao.connect();
+		System.out.println(product.toString());
+		dao.addProduct(product);
+		dao.disconnect();
 	}
+	public void addStock(String name, int stock) throws SQLException {
+		// inventory[numberProducts] = product;
+		dao.connect();
+		dao.addStock(name, stock);
+		dao.disconnect();
+	}
+	public void deleteProduct(String name) throws SQLException {
+		// inventory[numberProducts] = product;
+		dao.connect();
+		dao.deleteProduct(name);
+		dao.disconnect();
+	}
+	
 
 	/**
 	 * check if inventory is full or not

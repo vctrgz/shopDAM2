@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,8 +56,9 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public ShopView() {
+	public ShopView() throws SQLException {
 		tienda = new Shop();
 		try {
 			tienda.loadInventory();
@@ -187,6 +189,9 @@ public class ShopView extends JFrame implements ActionListener, KeyListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Error al exportar inventario", "ERROR", JOptionPane.ERROR_MESSAGE);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 			this.requestFocusInWindow();
 			break;

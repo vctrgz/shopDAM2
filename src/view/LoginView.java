@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -121,7 +122,13 @@ public class LoginView extends JFrame implements ActionListener, KeyListener{
 				int usuario = Integer.parseInt(textField.getText());
 				empleado.login(usuario, textField_2.getText());
 				if (empleado.login(usuario, textField_2.getText()) == true) {
-					ShopView shopview = new ShopView();
+					ShopView shopview = null;
+					try {
+						shopview = new ShopView();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					shopview.setVisible(true);
 					controlador = 1;
 				}
