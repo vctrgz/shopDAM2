@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import dao.Dao;
+import dao.DaoImplHibernate;
 import dao.DaoImplJDBC;
 import dao.DaoImplJaxb;
 import dao.DaoImplXML;
@@ -33,7 +34,7 @@ public class Shop {
 	// private Sale[] sales;
 	public ArrayList<Sale> sales;
 	// int salePosicion;
-	Dao dao = new DaoImplJDBC();
+	Dao dao = new DaoImplHibernate();
 
 	final static double TAX_RATE = 1.04;
 
