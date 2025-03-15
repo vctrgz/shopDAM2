@@ -98,6 +98,7 @@ public class DaoImplHibernate implements Dao{
 	public void addProduct(Product product) {
 		// TODO Auto-generated method stub
 		try {
+			System.out.println(product.getPrice());
 
 			tx = session.beginTransaction();
 

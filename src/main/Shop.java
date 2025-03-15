@@ -25,6 +25,7 @@ import dao.Dao;
 import dao.DaoImplHibernate;
 import dao.DaoImplJDBC;
 import dao.DaoImplJaxb;
+import dao.DaoImplMongoDB;
 import dao.DaoImplXML;
 
 public class Shop {
@@ -34,7 +35,7 @@ public class Shop {
 	// private Sale[] sales;
 	public ArrayList<Sale> sales;
 	// int salePosicion;
-	Dao dao = new DaoImplHibernate();
+	Dao dao = new DaoImplMongoDB();
 
 	final static double TAX_RATE = 1.04;
 

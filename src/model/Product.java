@@ -49,6 +49,7 @@ public class Product {
 		this.name = name;
 		this.wholesalerPrice = new Amount(wholesalerPrice);
 		this.publicPrice = new Amount(wholesalerPrice * 2);
+		this.price = wholesalerPrice;
 		this.available = available;
 		this.stock = stock;
 	}

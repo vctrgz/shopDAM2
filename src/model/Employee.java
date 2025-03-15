@@ -4,13 +4,14 @@ import java.sql.SQLException;
 
 import dao.Dao;
 import dao.DaoImplJDBC;
+import dao.DaoImplMongoDB;
 import main.Logable;
 
 public class Employee extends Person implements Logable{
 	int employeeId;
 	int userNumber;
 	String password;
-	Dao dao = new DaoImplJDBC();
+	Dao dao = new DaoImplMongoDB();
 	
 	public Employee(int employeeID, int userNumber, String password) {
 		this.employeeId = employeeID;
