@@ -73,7 +73,8 @@ public class DaoImplMongoDB implements Dao {
 		for (Document doc : document) {
 			
 			String name = doc.get("name", String.class);
-			double wholesalerPrice = doc.get("wholesalerPrice", Document.class).get("value", Double.class);
+			Document precio = doc.get("wholesalerPrice", Document.class);
+			double wholesalerPrice = precio.get("value", Double.class);
 			boolean available = doc.get("available", Boolean.class);
 			int stock = doc.get("stock", Integer.class);
 
